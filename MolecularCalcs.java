@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class MolecularCalcs extends Calculator
 {
-	private String inputMolecule, unitsInit, unitsFin;
+	private String inputMolecule, unitsInit, unitsFin, s;
 	private double givenValue;
 	private Scanner termReader;
 	private Molecule molecule;
@@ -14,6 +14,7 @@ public class MolecularCalcs extends Calculator
 		inputMolecule = "";
 		unitsInit = "";
 		unitsFin = "";
+		s = "";
 		givenValue = 0.0;
 		termReader = new Scanner(System.in);
 	}
@@ -54,16 +55,20 @@ public class MolecularCalcs extends Calculator
 		System.out.println();
 		unitsInit = Prompt.getString("\n--> Enter Initial Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
 		System.out.println();
-		String s = Prompt.getString("\n--> Enter acquired value/measurement : ");
+		s = Prompt.getString("\n--> Enter acquired value/measurement : ");
 		System.out.println();
+		symbolReader();
+		System.out.print("\n--> Enter Final Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
+		unitsFin = termReader.nextLine();
+	}
+
+	public void symbolReader()
+	{
 		if(s.contains("^") && !s.contains("*")) //ex: 15^16
 			givenValue = Math.pow(Double.parseDouble(s.substring(0,s.indexOf("^"))),Double.parseDouble(s.substring(s.indexOf("^")+1)));
 		else if(s.contains("^") && s.contains("*")) //ex: 2.3*10^17 (scientific notation)
 			givenValue = Double.parseDouble(s.substring(0,s.indexOf("*")))*Math.pow(Double.parseDouble(s.substring(s.indexOf("*")+1,s.indexOf("^"))),Double.parseDouble(s.substring(s.indexOf("^")+1)));
 		else //ex: 15.16
 			givenValue = Double.parseDouble(s);
-
-		System.out.print("\n--> Enter Final Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
-		unitsFin = termReader.nextLine();
 	}
 }
