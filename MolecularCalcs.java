@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class MolecularCalcs
+public class MolecularCalcs extends Calculator
 {
-	private String inputMolecule, unitsInit, unitsFin;
+	private String inputMolecule, unitsInit, unitsFin, s;
 	private double givenValue;
 	private Scanner termReader;
 	private Molecule molecule;
@@ -14,6 +14,7 @@ public class MolecularCalcs
 		inputMolecule = "";
 		unitsInit = "";
 		unitsFin = "";
+		s = "";
 		givenValue = 0.0;
 		termReader = new Scanner(System.in);
 	}
@@ -28,7 +29,7 @@ public class MolecularCalcs
 	{
 		introduction();
 		
-		getMoleculeInfo();
+		getScienceInformation();
 		molecule = new Molecule(inputMolecule);
 		molecule.calculateAttr(); //calculate attribute
 
@@ -46,23 +47,28 @@ public class MolecularCalcs
 		System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
 	}
 
-	public void getMoleculeInfo()
+	public void getScienceInformation()
 	{
-		System.out.print("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
-		inputMolecule = termReader.nextLine();
-		System.out.print("\n--> Enter Initial Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
-		unitsInit = termReader.nextLine();
-		
-		System.out.print("\n--> Enter acquired value/measurement : ");
-		String s = termReader.nextLine();
+		//System.out.print("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
+		//inputMolecule = termReader.nextLine();
+		inputMolecule = Prompt.getString("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
+		System.out.println();
+		unitsInit = Prompt.getString("\n--> Enter Initial Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
+		System.out.println();
+		s = Prompt.getString("\n--> Enter acquired value/measurement : ");
+		System.out.println();
+		symbolReader();
+		System.out.print("\n--> Enter Final Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
+		unitsFin = termReader.nextLine();
+	}
+
+	public void symbolReader()
+	{
 		if(s.contains("^") && !s.contains("*")) //ex: 15^16
 			givenValue = Math.pow(Double.parseDouble(s.substring(0,s.indexOf("^"))),Double.parseDouble(s.substring(s.indexOf("^")+1)));
 		else if(s.contains("^") && s.contains("*")) //ex: 2.3*10^17 (scientific notation)
 			givenValue = Double.parseDouble(s.substring(0,s.indexOf("*")))*Math.pow(Double.parseDouble(s.substring(s.indexOf("*")+1,s.indexOf("^"))),Double.parseDouble(s.substring(s.indexOf("^")+1)));
 		else //ex: 15.16
 			givenValue = Double.parseDouble(s);
-
-		System.out.print("\n--> Enter Final Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
-		unitsFin = termReader.nextLine();
 	}
 }
