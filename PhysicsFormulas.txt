@@ -1,0 +1,2 @@
+vf = vi + a*t
+x = xi + vi*t + (1/2)*a*t^2 

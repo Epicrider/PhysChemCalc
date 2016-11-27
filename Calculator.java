@@ -9,5 +9,5 @@ public abstract class Calculator
 {
 	
 	public abstract void getScienceInformation();
-
+	public abstract void introduction();
 }

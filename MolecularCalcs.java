@@ -19,10 +19,11 @@ public class MolecularCalcs extends Calculator
 		termReader = new Scanner(System.in);
 	}
 
-	public static void main(String [] args)
+	public void run()
 	{
-		MolecularCalcs mcs = new MolecularCalcs();
-		mcs.initiateSequence();
+		//MolecularCalcs mcs = new MolecularCalcs();
+		//mcs.initiateSequence();
+		initiateSequence();
 	}
 
 	public void initiateSequence()
