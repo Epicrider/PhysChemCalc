@@ -18,7 +18,7 @@ public class Path
 
 	public String getSecondaryPath()
 	{
-		if(METRIC_TO_GRAM.indexOf(start) < METRIC_TO_GRAM.indexOf("gram"))
+		if(METRIC_TO_GRAM.indexOf(start) < METRIC_TO_GRAM.indexOf("gram");
 		{
 			start = "gram";
 			return METRIC_TO_GRAM.substring(METRIC_TO_GRAM.indexOf(start));
@@ -27,7 +27,6 @@ public class Path
 		{
 			return METRIC_TO_GRAM.substring(METRIC_TO_GRAM.indexOf("gram"), METRIC_TO_GRAM.indexOf(end))+end;
 		}
-		return "";
 	}
 
 	public String getMainPath()
@@ -37,5 +36,6 @@ public class Path
 		else
 			return GRAM_PER_MOL_TO_AMU.substring(GRAM_PER_MOL_TO_AMU.indexOf(start), GRAM_PER_MOL_TO_AMU.indexOf(end))+end;
 
+		return "";
 	}
 }
