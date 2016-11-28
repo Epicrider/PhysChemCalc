@@ -14,8 +14,13 @@ public class MolecularMath
 	private String mainPath;
 	private String secondaryPath;
 
+	private String start;//for testing
+	private String end;//for testing
+
 	public MolecularMath(String a, String b, double given, Molecule m)
 	{
+		start = a;
+		end = b;
 		path = new Path(a,b);
 		givenValue = given;
 		molecule = m;
@@ -23,7 +28,14 @@ public class MolecularMath
 
 	public void executePath(MolecularScreen screen)
 	{
-		secondaryPath = path.getSecondaryPath();
-		mainPath = path.getMainPath();
+		//secondaryPath = path.getSecondaryPath();
+		//mainPath = path.getMainPath();
+
+		
+		if(start.equals(PATH_MOLECULE) && end.equals(PATH_GRAMMOL))
+		{
+			screen.setPathDiagram(PATH_MOLECULE+">>"+PATH_GRAMMOL);
+			System.out.println("Mass of "+givenValue+" molecules of "+molecule.getName()+" : "+molecule.getTotalMass*givenValue);
+		}
 	}
 }
