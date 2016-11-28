@@ -31,7 +31,7 @@ public class MolecularMath
 		//secondaryPath = path.getSecondaryPath();
 		//mainPath = path.getMainPath();
 
-		
+
 		if(start.equals(PATH_MOLECULE) && end.equals(PATH_GRAMMOL))
 		{
 			screen.setPathDiagram(PATH_MOLECULE+">>"+PATH_GRAMMOL);
