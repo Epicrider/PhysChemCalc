@@ -35,7 +35,7 @@ public class MolecularMath
 		if(start.equals(PATH_MOLECULE) && end.equals(PATH_GRAMMOL))
 		{
 			screen.setPathDiagram(PATH_MOLECULE+">>"+PATH_GRAMMOL);
-			System.out.println("Mass of "+givenValue+" molecules of "+molecule.getName()+" : "+molecule.getTotalMass*givenValue);
+			System.out.println("Mass of "+givenValue+" molecules of "+molecule.getName()+" : "+molecule.getTotalMass()*givenValue);
 		}
 	}
 }
