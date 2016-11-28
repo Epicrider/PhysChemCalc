@@ -37,7 +37,7 @@ class MolecularPanel1 extends JPanel
 	private final int LEFT_JUSTF = 50;
 	private final int TOP_JUSTF = 180;
 	private final int TOP_JUSTF2 = 195;
-	private final BasicStroke thickStroke = new BasicStroke(9.0f);
+	private final BasicStroke thickStroke = new BasicStroke(9.0f);//changes the thickness of lines (utilized by drawLine(~))
 	private int SIZE_FACTOR; //treat as constant even though not declared as final
 
 	public MolecularPanel1()
@@ -49,18 +49,18 @@ class MolecularPanel1 extends JPanel
 	}
 
 	public void setArrays(String [] a1, int [] a2)
-	{
+	{//automatically called
 		atomicSymbols = a1;
 		atomCount = a2;
-		if(400/atomicSymbols.length > 80)
+		if(400/atomicSymbols.length > 80) //makes sure max font size for drawing molecule is 80
 			SIZE_FACTOR = 80;
 		else
-			SIZE_FACTOR = 400/atomicSymbols.length;
+			SIZE_FACTOR = 400/atomicSymbols.length; //reduces font size as molecule size gets larger
 		repaint();
 	}
 
 	public void setPathDiagram(String s)
-	{
+	{//will be called (not directly) by MolecularMath when path selection is complete
 		pathDiagram = s;
 		repaint();
 	}
