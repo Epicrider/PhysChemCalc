@@ -1,5 +1,5 @@
 //CalcRunner.java
-//Omar Hossain
+//Omar Hossain- Jeyadave Nuntha Kumar
 //11-27-16
 //Version: 1.0
 //Start Calc here!
@@ -23,7 +23,7 @@ public class CalcRunner
 		{
 			System.out.print("\nLoading Chemistry Calculator...\n");
 			MolecularCalcs mc = new MolecularCalcs();
-			mc.run();
+			mc.initiateSequence();
 		}
 		else if(choice == 2)
 		{
