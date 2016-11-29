@@ -11,31 +11,31 @@ public class MolecularMath
 	private double givenValue;
 	private Molecule molecule;
 	private Path path;
-	private String mainPath;
-	private String secondaryPath;
-
-	private String start;//for testing
-	private String end;//for testing
+	private String start;
+	private String end;
 
 	public MolecularMath(String a, String b, double given, Molecule m)
 	{
 		start = a;
 		end = b;
-		path = new Path(a,b);
+		path = new Path(start,end);
 		givenValue = given;
 		molecule = m;
 	}
 
 	public void executePath(MolecularScreen screen)
 	{
-		//secondaryPath = path.getSecondaryPath();
-		//mainPath = path.getMainPath();
-
-
-		if(start.equals(PATH_MOLECULE) && end.equals(PATH_GRAMMOL))
+		boolean onlyMetric = path.onlyOneConversionType("onlyMetric");
+		boolean onlyNonMetric = path.onlyOneConversionType("onlyNonMetric");
+		if(onlyMetric)
 		{
-			screen.setPathDiagram(PATH_MOLECULE+">>"+PATH_GRAMMOL);
-			System.out.println("Mass of "+givenValue+" molecules of "+molecule.getName()+" : "+molecule.getTotalMass()*givenValue);
+			System.out.println("Only interrelated metric units conversions");
 		}
+		else if(onlyNonMetric)
+		{
+			System.out.println("Only interrelated non-metric units conversions");
+		}
+		else if(!onlyNonMetric && !onlyMetric)
+			System.out.println("Mix of interrelated metric and interrelated non-metric conversions");
 	}
 }
