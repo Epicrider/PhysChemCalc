@@ -50,7 +50,6 @@ public class Path
 		while(siReader.hasNext())
 		{
 			line = siReader.nextLine();
-			System.out.println(line);
 			line = line.substring(0,line.indexOf("["));
 			if(start.contains(line))
 			{
@@ -65,7 +64,6 @@ public class Path
 			while(siReader.hasNext())
 			{
 				line = siReader.nextLine();
-				System.out.println(line);
 				line = line.substring(0,line.indexOf("["));
 				if(end.contains(line))
 				{
