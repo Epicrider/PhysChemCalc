@@ -28,13 +28,9 @@ public class MolecularMath
 		boolean onlyMetric = path.onlyOneConversionType("onlyMetric");
 		boolean onlyNonMetric = path.onlyOneConversionType("onlyNonMetric");
 		if(onlyMetric)
-		{
 			System.out.println("Only interrelated metric units conversions");
-		}
 		else if(onlyNonMetric)
-		{
 			System.out.println("Only interrelated non-metric units conversions");
-		}
 		else if(!onlyNonMetric && !onlyMetric)
 			System.out.println("Mix of interrelated metric and interrelated non-metric conversions");
 	}

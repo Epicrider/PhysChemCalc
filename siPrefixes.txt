@@ -6,7 +6,7 @@ mega[10^6
 kilo[10^3
 hecto[10^2
 deka[10^1
-base[10^0
+gram[10^0
 deci[10^-1
 centi[10^-2
 milli[10^-3

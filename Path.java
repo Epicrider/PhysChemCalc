@@ -9,10 +9,8 @@ public class Path
 	private Scanner siReader;
 	private File siPrefixes;
 
-	private final String AMU_TO_GRAM_PER_MOL = "amu>gram>mol>particles>gram/mol";
-	private final String GRAM_PER_MOL_TO_AMU = "gram/mol>particles>mol>gram>amu";
-	private final String METRIC_TO_GRAM = "metric>imperial>gram";
-	private final String GRAM_TO_METRIC = "gram>imperial>metric";
+	private final String PATH_DIRECTION_FWD = "amu[gram[mol[particles[gram/mol";
+	private final String PATH_DIRECTION_REV = "gram/mol[particles[mol[gram[amu";
 
 	public Path(String a, String b)
 	{
@@ -80,5 +78,15 @@ public class Path
 		if(type.equals("onlyMetric"))
 			return false;
 		return true;
+	}
+
+	public void setMetricPath()
+	{
+
+	}
+
+	public void setNonMetricPath()
+	{
+
 	}
 }

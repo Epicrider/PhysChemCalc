@@ -38,13 +38,19 @@ public class MolecularCalcs
 		System.out.println("                   || MolecularCalcs ||");
 		System.out.println("|| This program will help you with dimensional analysis ||");
 		System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
+		System.out.print("\n Are you familiar with how to use this program? (ENTER = yes, N = no) : ");
+		if(termReader.nextLine().equalsIgnoreCase("n"))
+		{
+			System.out.print("\nHit ENTER when done : ");
+			termReader.nextLine();
+		}
 	}
 
 	public void getMoleculeInfo()
 	{
 		System.out.print("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
 		inputMolecule = termReader.nextLine();
-		System.out.print("\n--> Enter Initial Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
+		System.out.print("\n--> Enter Initial Units (mass[imperial units only, and: gram, gram/mol], particles, mol, amu) : ");
 		unitsInit = termReader.nextLine();
 		
 		System.out.print("\n--> Enter acquired value/measurement : ");
@@ -56,7 +62,7 @@ public class MolecularCalcs
 		else //ex: 15.16
 			givenValue = Double.parseDouble(s);
 
-		System.out.print("\n--> Enter Final Units (mass[imperial units only, and: gram, gram/mol], molecules/atoms, mol, amu) : ");
+		System.out.print("\n--> Enter Final Units (mass[imperial units only, and: gram, gram/mol], particles, mol, amu) : ");
 		unitsFin = termReader.nextLine();
 	}
 }
