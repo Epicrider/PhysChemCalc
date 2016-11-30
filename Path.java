@@ -51,7 +51,7 @@ public class Path
 		{
 			line = siReader.nextLine();
 			line = line.substring(0,line.indexOf("["));
-			if(start.contains(line))
+			if(line.contains(start))
 			{
 				if(bool)
 					return !bool;
@@ -65,7 +65,7 @@ public class Path
 			{
 				line = siReader.nextLine();
 				line = line.substring(0,line.indexOf("["));
-				if(end.contains(line))
+				if(line.contains(end))
 				{
 					if(type.equals("onlyMetric"))
 						return bool;
