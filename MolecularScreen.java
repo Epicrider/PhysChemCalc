@@ -80,7 +80,15 @@ class MolecularPanel1 extends JPanel
 		extraGraphics.drawLine(750,85,860,85);
 
 		g.drawString("PATH : ",750,80);
-		g.drawString(pathDiagram,500,200);
+		if(pathDiagram.contains("#"))
+		{
+			String line = pathDiagram.substring(0,pathDiagram.indexOf("#")+1);
+			g.drawString(line,500,200);
+			line = pathDiagram.substring(pathDiagram.indexOf("#")+1);
+			g.drawString(line,500,350);
+		}
+		else
+			g.drawString(pathDiagram,500,200);
 		g.setFont(new Font("Sans Serif",Font.BOLD, SIZE_FACTOR));
 		
 		for(int i = 0; i<= atomicSymbols.length-1; i++)
