@@ -7,6 +7,7 @@ public class Path
 	private String end;
 	private String path;
 	private boolean metricFirst;
+	private boolean metricLast;
 	private Scanner siReader;
 	private File siPrefixes;
 
@@ -19,6 +20,7 @@ public class Path
 		end = b;
 		path = "";
 		metricFirst = false;
+		metricLast = false;
 		siPrefixes = new File("siPrefixes.txt");
 		setScanner();
 	}
@@ -75,6 +77,7 @@ public class Path
 				line = line.substring(0,line.indexOf("["));
 				if(line.contains(end))
 				{
+					metricLast = true;
 					if(type.equals("onlyMetric"))
 						return bool;
 					return !bool;
@@ -84,6 +87,64 @@ public class Path
 		if(type.equals("onlyMetric"))
 			return false;
 		return true;
+	}
+
+	public boolean gramException()
+	{
+		boolean isMetricLast = false;
+		if(start.equals("gram"))
+		{
+			setScanner();
+			while(siReader.hasNext())
+			{
+				String line = siReader.nextLine();
+				if(line.contains(end) && line.indexOf(end) == 0)//good example of short-circuit evaluation
+				{
+					path = "gram -> "+end;
+					return true;
+				}
+			}
+		}
+		else if(end.equals("gram"))
+		{
+			setScanner();
+			while(siReader.hasNext())
+			{
+				String line = siReader.nextLine();
+				if(line.contains(start) && line.indexOf(start) == 0)//good example of short-circuit evaluation
+				{
+					path = start+" -> gram";
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	public boolean molException()
+	{
+		if(start.equals("mol") && metricLast)
+		{
+			path = "mol -> gram#gram -> "+end;
+			return true;
+		}
+		return false;
+	}
+
+	public boolean amuException()
+	{
+		if(start.equals("amu") && end.equals("gram"))
+		{
+			path = "amu -> gram";
+			return true;
+		}
+		else if(start.equals("gram") && end.equals("amu"))
+		{
+			path = "gram -> amu";
+			return true;
+		}
+		return false;
 	}
 
 	public void setAMUIrregularPath()//Covers exception that other path finder methods will not find 
@@ -124,7 +185,7 @@ public class Path
 
 	public void setNonMetricPath(String starting, boolean bePrereq)//bePrereq is true = First Path division, bePrereq  is false = Second Path division
 	{
-		String start = this.start;//"this" keyword indicates to first look for start outside of the method
+		String start = this.start;//"this" keyword indicates to first look for variableoutside of the method
 		String end = this.end;
 
 		if(starting.equals("gram"))
@@ -141,24 +202,19 @@ public class Path
 		String lineLast = "";
 		if(first < last)
 		{
-			System.out.println("DEBUGG");
 			lineFirst = PATH_DIRECTION_FWD.substring(first,last);
 			lineLast = PATH_DIRECTION_FWD.substring(last);
 			lineLast = lineLast.substring(0,lineLast.indexOf(" ->"));
 		}
 		else
 		{
-			System.out.println("DEBUGG");
 			first = PATH_DIRECTION_REV.indexOf(start);
 			last = PATH_DIRECTION_REV.indexOf(end);
 			if(end.equals("gram"))//removes confusion between gram/mol index and gram index
 				last = PATH_DIRECTION_REV.lastIndexOf(end);
 			lineFirst = PATH_DIRECTION_REV.substring(first,last);
-			System.out.println("\n\n"+lineFirst);
 			lineLast = PATH_DIRECTION_REV.substring(last);
-			System.out.println(lineLast);
 			lineLast = lineLast.substring(0,lineLast.indexOf(" ->"));
-			System.out.println(lineLast);
 		}
 		if(starting.equals("gram"))
 		{

@@ -29,41 +29,50 @@ public class MolecularMath
 	{
 		boolean onlyMetric = path.onlyOneConversionType("onlyMetric");
 		boolean onlyNonMetric = path.onlyOneConversionType("onlyNonMetric");
+		if(!path.gramException())
+		{
+			if(!path.molException())
+			{
+				if(!path.amuException())
+				{
+					if((!onlyNonMetric && !onlyMetric) && end.equals("amu"))
+					{
+						path.setAMUIrregularPath();
+					}
+					else if(start.equals("mol") && (end.equals("gram") || end.equals("amu")))
+					{
+						path.setMOLIrregularPath("type1");
+					}
+					else if((start.equals("gram/mol") || start.equals("particles")) && end.equals("mol"))
+					{
+						path.setMOLIrregularPath("type2");
+					}
+					else
+					{
 
-		if((!onlyNonMetric && !onlyMetric) && end.equals("amu"))
-		{
-			path.setAMUIrregularPath();
-		}
-		else if(start.equals("mol") && (end.equals("gram") || end.equals("amu")))
-		{
-			path.setMOLIrregularPath("type1");
-		}
-		else if((start.equals("gram/mol") || start.equals("particles")) && end.equals("mol"))
-		{
-			path.setMOLIrregularPath("type2");
-		}
-		else
-		{
-			if(onlyMetric)
-			{
-				path.setMetricPath("N/A",false);
-			}
-			else if(onlyNonMetric || (!onlyNonMetric && !onlyMetric && (start.equals("gram") || end.equals("gram"))))//after ||: verifies that is not
-			//mix solely due to the appearance of gram since gram is found in both metric & non-metric
-			{
-				path.setNonMetricPath("N/A",false);
-			}
-			else if(!onlyNonMetric && !onlyMetric)
-			{
-				if(path.isMetricFirst())
-				{
-					path.setMetricPath("gram",true);
-					path.setNonMetricPath("gram",false);
-				}
-				else
-				{
-					path.setNonMetricPath("gram", true);
-					path.setMetricPath("gram",false);
+						if(onlyMetric)
+						{
+							path.setMetricPath("N/A",false);
+						}
+						else if(onlyNonMetric || (!onlyNonMetric && !onlyMetric && (start.equals("gram") || end.equals("gram"))))//after ||: verifies that is not
+						//mix solely due to the appearance of gram since gram is found in both metric & non-metric
+						{
+							path.setNonMetricPath("N/A",false);
+						}
+						else if(!onlyNonMetric && !onlyMetric)
+						{
+							if(path.isMetricFirst())
+							{
+								path.setMetricPath("gram",true);
+								path.setNonMetricPath("gram",false);
+							}
+							else
+							{
+								path.setNonMetricPath("gram", true);
+								path.setMetricPath("gram",false);
+							}
+						}
+					}
 				}
 			}
 		}
