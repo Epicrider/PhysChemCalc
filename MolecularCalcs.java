@@ -38,8 +38,8 @@ public class MolecularCalcs
 		System.out.println("                   || MolecularCalcs ||");
 		System.out.println("|| This program will help you with dimensional analysis ||");
 		System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><>\n");
-		System.out.print("\nOmar, please take some time to read this testing guide (Y = view, ENTER = skip) : ");
-		if(termReader.nextLine().equalsIgnoreCase("y"))
+		System.out.print("\nHi, please take some time to read this testing guide (P = play, ENTER = skip) : ");
+		if(termReader.nextLine().equalsIgnoreCase("p"))
 		{
 			System.out.println("\nFor the prompts that ask you to enter initial OR final units, here's what you can enter : ");
 			System.out.println("\n Any units found in siPrefixes.txt (ex: picogram, exagram, gram)");
