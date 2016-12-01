@@ -158,7 +158,7 @@ class MolecularFrame extends JFrame
 		setVisible(true);
 		setResizable(true);
 		setSize(1400,900);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);	
+		setDefaultCloseOperation(HIDE_ON_CLOSE);	
 		background = new ContentPanel();
 		setContentPane(background);
 		topPanel = new MolecularPanel1();

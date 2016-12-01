@@ -25,30 +25,46 @@ public class MolecularMath
 		molecule = m;
 	}
 
-	public void executePath(MolecularScreen screen)
+	public void setPath(MolecularScreen screen)
 	{
 		boolean onlyMetric = path.onlyOneConversionType("onlyMetric");
 		boolean onlyNonMetric = path.onlyOneConversionType("onlyNonMetric");
-		if(onlyMetric)
+
+		if((!onlyNonMetric && !onlyMetric) && end.equals("amu"))
 		{
-			path.setMetricPath("N/A",false);
+			path.setAMUIrregularPath();
 		}
-		else if(onlyNonMetric || (!onlyNonMetric && !onlyMetric && (start.equals("gram") || end.equals("gram"))))//after ||: verifies that is not
-		//mix solely due to the appearance of gram since gram is found in both metric & non-metric
+		else if(start.equals("mol") && (end.equals("gram") || end.equals("amu")))
 		{
-			path.setNonMetricPath("N/A",false);
+			path.setMOLIrregularPath("type1");
 		}
-		else if(!onlyNonMetric && !onlyMetric)
+		else if((start.equals("gram/mol") || start.equals("particles")) && end.equals("mol"))
 		{
-			if(path.isMetricFirst())
+			path.setMOLIrregularPath("type2");
+		}
+		else
+		{
+			if(onlyMetric)
 			{
-				path.setMetricPath("gram",true);
-				path.setNonMetricPath("gram",false);
+				path.setMetricPath("N/A",false);
 			}
-			else
+			else if(onlyNonMetric || (!onlyNonMetric && !onlyMetric && (start.equals("gram") || end.equals("gram"))))//after ||: verifies that is not
+			//mix solely due to the appearance of gram since gram is found in both metric & non-metric
 			{
-				path.setNonMetricPath("gram", true);
-				path.setMetricPath("gram",false);
+				path.setNonMetricPath("N/A",false);
+			}
+			else if(!onlyNonMetric && !onlyMetric)
+			{
+				if(path.isMetricFirst())
+				{
+					path.setMetricPath("gram",true);
+					path.setNonMetricPath("gram",false);
+				}
+				else
+				{
+					path.setNonMetricPath("gram", true);
+					path.setMetricPath("gram",false);
+				}
 			}
 		}
 		screen.setPathDiagram(path.getPath());

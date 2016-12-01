@@ -29,7 +29,9 @@ public class MolecularCalcs
 		screen = new MolecularScreen(molecule); //requires several of molecule's attributes
 
 		math = new MolecularMath(unitsInit,unitsFin,givenValue,molecule);
-		math.executePath(screen); //handles math and prints to interface
+		math.setPath(screen); //sets path and prints it to interface
+
+		end();
 	}
 
 	public void introduction()
@@ -64,6 +66,15 @@ public class MolecularCalcs
 			termReader.nextLine();
 		}
 		System.out.println();
+	}
+
+	public void end()
+	{
+		System.out.print("\nHope that helped! Hit ENTER to exit : ");
+		termReader.nextLine();
+		System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+		System.out.println("\n\n");
+		System.exit(1);
 	}
 
 	public void getMoleculeInfo()

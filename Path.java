@@ -86,6 +86,29 @@ public class Path
 		return true;
 	}
 
+	public void setAMUIrregularPath()//Covers exception that other path finder methods will not find 
+	{
+		path = start+" -> gram#gram -> "+end;
+	}
+
+	public void setMOLIrregularPath(String type)//Covers exception that other path finder methods will not find
+	{
+		if(type.equals("type1"))
+		{
+			if(end.equals("gram"))
+				path = "mol -> gram";
+			else if(end.equals("amu"))
+				path = "mol -> gram -> amu";
+		}
+		else if(type.equals("type2"))
+		{
+			if(start.equals("gram/mol"))
+				path = "gram/mol -> particles -> mol";
+			else if(start.equals("particles"))
+				path = "particles -> mol";
+		}
+	}
+
 	public void setMetricPath(String starting, boolean bePrereq)//bePrereq is true = First Path division, bePrereq  is false = Second Path division
 	{
 		if(starting.equals("gram"))
@@ -103,6 +126,7 @@ public class Path
 	{
 		String start = this.start;//"this" keyword indicates to first look for start outside of the method
 		String end = this.end;
+
 		if(starting.equals("gram"))
 		{
 			if(bePrereq)
@@ -112,24 +136,29 @@ public class Path
 		}
 
 		int first = PATH_DIRECTION_FWD.indexOf(start);
-		int last = PATH_DIRECTION_FWD.indexOf(end);
+		int last = PATH_DIRECTION_FWD.indexOf(end); 
 		String lineFirst = "";
 		String lineLast = "";
 		if(first < last)
 		{
+			System.out.println("DEBUGG");
 			lineFirst = PATH_DIRECTION_FWD.substring(first,last);
 			lineLast = PATH_DIRECTION_FWD.substring(last);
 			lineLast = lineLast.substring(0,lineLast.indexOf(" ->"));
 		}
 		else
 		{
+			System.out.println("DEBUGG");
 			first = PATH_DIRECTION_REV.indexOf(start);
 			last = PATH_DIRECTION_REV.indexOf(end);
 			if(end.equals("gram"))//removes confusion between gram/mol index and gram index
 				last = PATH_DIRECTION_REV.lastIndexOf(end);
 			lineFirst = PATH_DIRECTION_REV.substring(first,last);
+			System.out.println("\n\n"+lineFirst);
 			lineLast = PATH_DIRECTION_REV.substring(last);
+			System.out.println(lineLast);
 			lineLast = lineLast.substring(0,lineLast.indexOf(" ->"));
+			System.out.println(lineLast);
 		}
 		if(starting.equals("gram"))
 		{
