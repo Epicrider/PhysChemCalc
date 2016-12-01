@@ -92,6 +92,11 @@ public class Path
 	public boolean gramException()
 	{
 		boolean isMetricLast = false;
+		if(start.equals("mol") && end.equals("gram"))
+		{
+			path = "mol -> gram";
+			return true;
+		}
 		if(start.equals("gram"))
 		{
 			setScanner();
