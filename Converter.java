@@ -40,11 +40,8 @@ public class Converter
 		{
 			return "";
 		}
-		else
-		{
-			return "";
-		}
 
+		return "";
 	}
 
 	private String amu_Gram(String command)
@@ -53,10 +50,8 @@ public class Converter
 		{
 			return "";
 		}
-		else
-		{
-			return "";
-		}
+
+		return "";
 	}
 
 	private String gram_Mol(String command)
@@ -65,10 +60,8 @@ public class Converter
 		{
 			return "";
 		}
-		else
-		{
-			return "";
-		}
+
+		return "";
 	}
 
 	private String mol_Particles(String command)
@@ -77,10 +70,8 @@ public class Converter
 		{
 			return "";
 		}
-		else
-		{			
-			return "";
-		}
+
+		return "";
 	}
 
 	private String particles_GramMol(String command)
@@ -89,9 +80,7 @@ public class Converter
 		{
 			return "";
 		}
-		else
-		{
-			return "";
-		}
+
+		return "";
 	}
 }

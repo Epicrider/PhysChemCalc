@@ -136,32 +136,55 @@ public class MolecularMath
 	public boolean foundExceptions()
 	{
 		String line = path.getPath();
-		if(line.indexOf(" -> ") == line.lastIndexOf(" -> ") && line.indexOf("gram") != line.lastIndexOf("gram"))
+		if(line.equals("mol -> gram"))
 		{
-			if(line.startsWith("gram ->"))
-			{
-				System.out.println(" * Command : |gram -> "+line.substring(line.indexOf(" -> ")+4)+"|");
-				return true;
-			}
-			else if(line.endsWith("-> gram"))
-			{
-				System.out.println(" * Command : |"+line.substring(0,line.indexOf(" -> "))+" -> gram|");
-				return true;
-			}
+			System.out.println(" * Command : |mole -> gram|");
+			return true;
 		}
-		if(line.contains("#"))
+		else if(line.equals("gram -> mol"))
 		{
-			if(line.startsWith("amu") && line.indexOf("amu") < line.indexOf("#"))
+			System.out.println(" * Command : |gram -> mol|");
+			return true;
+		}
+		else if(line.equals("amu -> gram"))
+		{
+			System.out.println(" * Command : |amu -> gram|");
+			return true;
+		}
+		else if(line.equals("gram -> amu"))
+		{
+			System.out.println(" * Command : |gram -> amu|");
+			return true;
+		}
+		else
+		{
+			if(line.indexOf(" -> ") == line.lastIndexOf(" -> ") && line.indexOf("gram") != line.lastIndexOf("gram"))
 			{
-				System.out.println(" * Command : |amu -> gram");
-				System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
-				return true;
+				if(line.startsWith("gram ->"))
+				{
+					System.out.println(" * Command : |gram -> "+line.substring(line.indexOf(" -> ")+4)+"|");
+					return true;
+				}
+				else if(line.endsWith("-> gram"))
+				{
+					System.out.println(" * Command : |"+line.substring(0,line.indexOf(" -> "))+" -> gram|");
+					return true;
+				}
 			}
-			else if(line.startsWith("mol") && line.indexOf("mol") < line.indexOf("#"))
+			if(line.contains("#"))
 			{
-				System.out.println(" * Command : |mol -> gram");
-				System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
-				return true;
+				if(line.startsWith("amu") && line.indexOf("amu") < line.indexOf("#"))
+				{
+					System.out.println(" * Command : |amu -> gram");
+					System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
+					return true;
+				}
+				else if(line.startsWith("mol") && line.indexOf("mol") < line.indexOf("#"))
+				{
+					System.out.println(" * Command : |mol -> gram");
+					System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
+					return true;
+				}
 			}
 		}
 		return false;
