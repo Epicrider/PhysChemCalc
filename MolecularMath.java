@@ -82,7 +82,7 @@ public class MolecularMath
 
 	public void doMath(MolecularScreen screen)
 	{
-		convert = new Converter(path.getMetricConversionFirst(), path.getMetricConversionLast(), givenValue);
+		convert = new Converter(path.getMetricConversionFirst(), path.getMetricConversionLast(), givenValue, screen);
 		System.out.println("\n\nHere are the series of individual conversions : ");
 		
 		if(!foundExceptions())

@@ -4,8 +4,9 @@ public class Converter
 	private double metricConvLast;
 	private double finalResult;
 	private boolean metricAlready;
+	private MolecularScreen screen;
 
-	public Converter(int a, int b, double given)
+	public Converter(int a, int b, double given, MolecularScreen mscr)
 	{
 		metricConvFirst = 0.0;
 		metricConvLast = 0.0;
@@ -15,34 +16,82 @@ public class Converter
 			metricConvLast = (double)(Math.pow(10, b));
 		
 		finalResult = given;
+		screen = mscr;
 		metricAlready = false;
 	}
 
-	/*public String betweenMetrics()
+	public void takeCommand(String command)
 	{
-		if(metricConvFirst != 0.0)
-			finalResult = finalResult*(1/metricConvFirst);
-		return "";
+		if(command.contains("amu") && command.contains("gram"))
+			amu_Gram(command);
+		else if(command.contains("gram") && command.contains("mol"))
+			gram_Mol(command);
+		else if(command.contains("mol") && command.contains("particles"))
+			mol_Particles(command);
+		else if(command.contains("particles") && command.contains("gram/mol"))
+			particles_GramMol(command);
+		else
+			gram_Metrics(command);
 	}
 
-	public String amu_Gram()
+	private String gram_Metrics(String command)
 	{
-		return "";
+		if(command.startsWith("gram"))
+		{
+			return "";
+		}
+		else
+		{
+			return "";
+		}
+
 	}
 
-	public String gram_Mol()
+	private String amu_Gram(String command)
 	{
-
+		if(command.startsWith("amu"))
+		{
+			return "";
+		}
+		else
+		{
+			return "";
+		}
 	}
 
-	public String mol_Particles()
+	private String gram_Mol(String command)
 	{
-
+		if(command.startsWith("gram"))
+		{
+			return "";
+		}
+		else
+		{
+			return "";
+		}
 	}
 
-	public String particles_GramMol()
+	private String mol_Particles(String command)
 	{
+		if(command.startsWith("mol"))
+		{
+			return "";
+		}
+		else
+		{			
+			return "";
+		}
+	}
 
-	}*/
-
+	private String particles_GramMol(String command)
+	{
+		if(command.startsWith("particles"))
+		{
+			return "";
+		}
+		else
+		{
+			return "";
+		}
+	}
 }
