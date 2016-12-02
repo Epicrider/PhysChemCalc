@@ -6,6 +6,8 @@ public class Path
 	private String start;
 	private String end;
 	private String path;
+	private int metricConv1;
+	private int metricConv2;
 	private boolean metricFirst;
 	private boolean metricLast;
 	private Scanner siReader;
@@ -19,6 +21,8 @@ public class Path
 		start = a;
 		end = b;
 		path = "";
+		metricConv1 = 0;
+		metricConv2 = 0;
 		metricFirst = false;
 		metricLast = false;
 		siPrefixes = new File("siPrefixes.txt");
@@ -43,9 +47,24 @@ public class Path
 		return path;
 	}
 
+	public int getMetricConversionFirst()
+	{
+		return metricConv1;
+	}
+
+	public int getMetricConversionLast()
+	{
+		return metricConv2;
+	}
+
 	public boolean isMetricFirst()
 	{
 		return metricFirst;
+	}
+
+	public boolean isMetricLast()
+	{
+		return metricLast;
 	}
 
 	public boolean onlyOneConversionType(String type)
@@ -55,14 +74,16 @@ public class Path
 			bool = false;
 
 		String line = "";
+		String line2 = "";
 		setScanner();
 		while(siReader.hasNext())
 		{
 			line = siReader.nextLine();
-			line = line.substring(0,line.indexOf("["));
-			if(line.contains(start))
+			line2 = line.substring(0,line.indexOf("["));
+			if(line2.contains(start))
 			{
 				metricFirst = true;
+				metricConv1 = Integer.parseInt(line.substring(line.indexOf("^")+1));
 				if(bool)
 					return !bool;
 				bool = !bool;
@@ -74,10 +95,11 @@ public class Path
 			while(siReader.hasNext())
 			{
 				line = siReader.nextLine();
-				line = line.substring(0,line.indexOf("["));
-				if(line.contains(end))
+				line2 = line.substring(0,line.indexOf("["));
+				if(line2.contains(end))
 				{
 					metricLast = true;
+					metricConv2 = Integer.parseInt(line.substring(line.indexOf("^")+1));
 					if(type.equals("onlyMetric"))
 						return bool;
 					return !bool;

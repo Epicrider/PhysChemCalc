@@ -14,15 +14,17 @@ public class MolecularMath
 	private double givenValue;
 	private Molecule molecule;
 	private Path path;
+	private Converter convert;
 
 	public MolecularMath(String a, String b, double given, Molecule m)
 	{
 		start = a;
 		end = b;
 		current = "";
-		path = new Path(start,end);
 		givenValue = given;
 		molecule = m;
+		path = new Path(start,end);
+		convert = null;
 	}
 
 	public void setPath(MolecularScreen screen)
@@ -76,5 +78,92 @@ public class MolecularMath
 			}
 		}
 		screen.setPathDiagram(path.getPath());
+	}
+
+	public void doMath(MolecularScreen screen)
+	{
+		convert = new Converter(path.getMetricConversionFirst(), path.getMetricConversionLast(), givenValue);
+		System.out.println("\n\nHere are the series of individual conversions : ");
+		
+		if(!foundExceptions())
+		{
+			boolean done = false;
+			String line = path.getPath();
+			String temp = "";
+			int index = 0;
+
+			String metricLastTemp = "";
+			if(path.isMetricLast())
+			{
+				metricLastTemp = line.substring(line.indexOf("#")+1);
+				line = line.substring(0,line.indexOf("#"));
+			}
+
+			if(path.isMetricFirst())
+			{
+				temp = line.substring(0,line.indexOf("#"));
+				line = line.substring(line.indexOf("#")+1);
+				System.out.println(" * Command : |"+temp+"|");
+			}
+
+			while(!done)
+			{
+				if(line.indexOf(" -> ") == line.lastIndexOf(" -> "))
+				{
+					done = true;
+					temp = line;
+				}
+				else
+				{
+					index = line.indexOf(" -> ")+4;
+					temp = line.substring(index);
+					index = index + temp.indexOf(" -> ");
+					temp = line.substring(0,index);
+					System.out.println(" * Command : |"+temp+"|");
+					line = line.substring(line.indexOf(" -> ")+4);
+					if(path.isMetricLast() && line.indexOf(" -> ") == line.lastIndexOf(" -> "))
+						System.out.println(" * Command : |"+line+"|");
+				}	
+			}
+
+			if(path.isMetricLast())
+				System.out.println(" * Command : |"+metricLastTemp+"|");
+			else
+				System.out.println(" * Command : |"+temp+"|");
+		}
+	}
+
+	public boolean foundExceptions()
+	{
+		String line = path.getPath();
+		if(line.indexOf(" -> ") == line.lastIndexOf(" -> ") && line.indexOf("gram") != line.lastIndexOf("gram"))
+		{
+			if(line.startsWith("gram ->"))
+			{
+				System.out.println(" * Command : |gram -> "+line.substring(line.indexOf(" -> ")+4)+"|");
+				return true;
+			}
+			else if(line.endsWith("-> gram"))
+			{
+				System.out.println(" * Command : |"+line.substring(0,line.indexOf(" -> "))+" -> gram|");
+				return true;
+			}
+		}
+		if(line.contains("#"))
+		{
+			if(line.startsWith("amu") && line.indexOf("amu") < line.indexOf("#"))
+			{
+				System.out.println(" * Command : |amu -> gram");
+				System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
+				return true;
+			}
+			else if(line.startsWith("mol") && line.indexOf("mol") < line.indexOf("#"))
+			{
+				System.out.println(" * Command : |mol -> gram");
+				System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
+				return true;
+			}
+		}
+		return false;
 	}
 }

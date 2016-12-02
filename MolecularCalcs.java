@@ -30,6 +30,7 @@ public class MolecularCalcs
 
 		math = new MolecularMath(unitsInit,unitsFin,givenValue,molecule);
 		math.setPath(screen); //sets path and prints it to interface
+		math.doMath(screen);
 
 		end();
 	}
@@ -80,12 +81,12 @@ public class MolecularCalcs
 	public void getMoleculeInfo()
 	{
 		System.out.print("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
-		inputMolecule = termReader.nextLine();
+		inputMolecule = termReader.nextLine().trim();
 		System.out.print("\n--> Enter Initial Units (units described in guide, gram, gram/mol, particles, mol, amu) : ");
-		unitsInit = termReader.nextLine();
+		unitsInit = termReader.nextLine().trim();
 		
 		System.out.print("\n--> Enter acquired value/measurement : ");
-		String s = termReader.nextLine();
+		String s = termReader.nextLine().trim();
 		if(s.contains("^") && !s.contains("*")) //ex: 15^16
 			givenValue = Math.pow(Double.parseDouble(s.substring(0,s.indexOf("^"))),Double.parseDouble(s.substring(s.indexOf("^")+1)));
 		else if(s.contains("^") && s.contains("*")) //ex: 2.3*10^17 (scientific notation)
@@ -95,5 +96,11 @@ public class MolecularCalcs
 
 		System.out.print("\n--> Enter Final Units (units described in guide, gram, gram/mol, particles, mol, amu) : ");
 		unitsFin = termReader.nextLine();
+		while(unitsInit.endsWith("gram") && unitsInit.length() > 4 && unitsFin.endsWith("gram") && unitsFin.length() > 4)
+		{
+			System.out.println("	<THIS PROGRAM DOES NOT OFFER SUCH METRIC-METRIC CALCULATIONS!>");
+			System.out.print("\n--> Enter Final Units (units described in guide, gram, gram/mol, particles, mol, amu) : ");
+			unitsFin = termReader.nextLine();
+		}
 	}
 }
