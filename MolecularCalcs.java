@@ -61,7 +61,7 @@ public class MolecularCalcs
 			System.out.println(" Anywhere that says '#' represents a split in calculations that you will later see in RESULTS when program is completed");
 			System.out.print("\nHit ENTER when done : ");
 			termReader.nextLine();
-			System.out.println("\n BTW, the code to determine the path was not that easy to write :/");
+			System.out.println("\n HI again");
 			System.out.print("\nHit ENTER when done : ");
 			termReader.nextLine();
 		}
@@ -70,7 +70,7 @@ public class MolecularCalcs
 
 	public void end()
 	{
-		System.out.print("\nHope that helped! Hit ENTER to exit : ");
+		System.out.print("\nHit ENTER to exit : ");
 		termReader.nextLine();
 		System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
 		System.out.println("\n\n");

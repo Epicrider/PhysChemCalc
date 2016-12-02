@@ -49,7 +49,6 @@ public class MolecularMath
 					}
 					else
 					{
-
 						if(onlyMetric)
 						{
 							path.setMetricPath("N/A",false);
