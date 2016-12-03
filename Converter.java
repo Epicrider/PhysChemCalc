@@ -6,7 +6,11 @@ public class Converter
 	private boolean metricAlready;
 	private MolecularScreen screen;
 
-	public Converter(int a, int b, double given, MolecularScreen mscr)
+	private final double AMU_PER_GRAM = Math.pow(1.66,-24);
+	private double GRAM_PER_MOL;
+	private final double MOL_PER_PARTICLES = Math.pow(6.02,23);
+
+	public Converter(int a, int b, double given, MolecularScreen mscr, double molarMass)
 	{
 		metricConvFirst = 0.0;
 		metricConvLast = 0.0;
@@ -17,18 +21,24 @@ public class Converter
 		
 		finalResult = given;
 		screen = mscr;
+		GRAM_PER_MOL = molarMass;
 		metricAlready = false;
+	}
+	//method for testing
+	public double getFinalResult()
+	{
+		return finalResult;
 	}
 
 	public void takeCommand(String command)
 	{
-		if(command.contains("amu") && command.contains("gram"))
+		if(command.contains("amu -> gram") || command.contains("gram -> amu"))
 			amu_Gram(command);
-		else if(command.contains("gram") && command.contains("mol"))
+		else if(command.contains("gram -> mol") || command.contains("mol -> gram"))
 			gram_Mol(command);
-		else if(command.contains("mol") && command.contains("particles"))
+		else if(command.contains("mol -> particles") || command.contains("particles -> mol"))
 			mol_Particles(command);
-		else if(command.contains("particles") && command.contains("gram/mol"))
+		else if(command.contains("particles -> gram/mol") || command.contains("gram/mol -> particles"))
 			particles_GramMol(command);
 		else
 			gram_Metrics(command);
@@ -48,9 +58,10 @@ public class Converter
 	{
 		if(command.startsWith("amu"))
 		{
+			finalResult = finalResult*(AMU_PER_GRAM);
 			return "";
 		}
-
+		finalResult = finalResult*(1/AMU_PER_GRAM);
 		return "";
 	}
 
@@ -58,9 +69,10 @@ public class Converter
 	{
 		if(command.startsWith("gram"))
 		{
+			finalResult = finalResult*(GRAM_PER_MOL);
 			return "";
 		}
-
+		finalResult = finalResult*(1/GRAM_PER_MOL);
 		return "";
 	}
 
@@ -68,9 +80,10 @@ public class Converter
 	{
 		if(command.startsWith("mol"))
 		{
+			finalResult = finalResult*(MOL_PER_PARTICLES);
 			return "";
 		}
-
+		finalResult = finalResult*(1/MOL_PER_PARTICLES);
 		return "";
 	}
 
@@ -78,9 +91,10 @@ public class Converter
 	{
 		if(command.startsWith("particles"))
 		{
+			finalResult = finalResult*(GRAM_PER_MOL);
 			return "";
 		}
-
+		finalResult = finalResult*(1/GRAM_PER_MOL);
 		return "";
 	}
 }

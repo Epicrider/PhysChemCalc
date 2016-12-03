@@ -26,6 +26,11 @@ public class MolecularMath
 		path = new Path(start,end);
 		convert = null;
 	}
+	//method for testing
+	public double getFinalResult()
+	{
+		return convert.getFinalResult();
+	}
 
 	public void setPath(MolecularScreen screen)
 	{
@@ -80,10 +85,19 @@ public class MolecularMath
 		screen.setPathDiagram(path.getPath());
 	}
 
+	public void packageAndSendCommand(String command)
+	{
+		System.out.println(command);
+		command = command.substring(command.indexOf("|")+1,command.lastIndexOf("|"));
+		convert.takeCommand(command);
+	}
+
 	public void doMath(MolecularScreen screen)
 	{
-		convert = new Converter(path.getMetricConversionFirst(), path.getMetricConversionLast(), givenValue, screen);
-		System.out.println("\n\nHere are the series of individual conversions : ");
+		convert = new Converter(path.getMetricConversionFirst(), path.getMetricConversionLast(), givenValue, screen, molecule.getTotalMass());
+		System.out.println("\n\n-------------------------------------------------------------------------------------------------------------");
+		System.out.println(" <The following information presented to you is helpful for your testing<\n");
+		System.out.println(" * Here are the series of individual conversions :");
 		
 		if(!foundExceptions())
 		{
@@ -103,7 +117,7 @@ public class MolecularMath
 			{
 				temp = line.substring(0,line.indexOf("#"));
 				line = line.substring(line.indexOf("#")+1);
-				System.out.println(" * Command : |"+temp+"|");
+				packageAndSendCommand(" * Command : |"+temp+"|");
 			}
 
 			while(!done)
@@ -119,17 +133,17 @@ public class MolecularMath
 					temp = line.substring(index);
 					index = index + temp.indexOf(" -> ");
 					temp = line.substring(0,index);
-					System.out.println(" * Command : |"+temp+"|");
+					packageAndSendCommand(" * Command : |"+temp+"|");
 					line = line.substring(line.indexOf(" -> ")+4);
 					if(path.isMetricLast() && line.indexOf(" -> ") == line.lastIndexOf(" -> "))
-						System.out.println(" * Command : |"+line+"|");
+						packageAndSendCommand(" * Command : |"+line+"|");
 				}	
 			}
 
 			if(path.isMetricLast())
-				System.out.println(" * Command : |"+metricLastTemp+"|");
+				packageAndSendCommand(" * Command : |"+metricLastTemp+"|");
 			else
-				System.out.println(" * Command : |"+temp+"|");
+				packageAndSendCommand(" * Command : |"+temp+"|");
 		}
 	}
 
@@ -138,22 +152,22 @@ public class MolecularMath
 		String line = path.getPath();
 		if(line.equals("mol -> gram"))
 		{
-			System.out.println(" * Command : |mole -> gram|");
+			packageAndSendCommand(" * Command : |mole -> gram|");
 			return true;
 		}
 		else if(line.equals("gram -> mol"))
 		{
-			System.out.println(" * Command : |gram -> mol|");
+			packageAndSendCommand(" * Command : |gram -> mol|");
 			return true;
 		}
 		else if(line.equals("amu -> gram"))
 		{
-			System.out.println(" * Command : |amu -> gram|");
+			packageAndSendCommand(" * Command : |amu -> gram|");
 			return true;
 		}
 		else if(line.equals("gram -> amu"))
 		{
-			System.out.println(" * Command : |gram -> amu|");
+			packageAndSendCommand(" * Command : |gram -> amu|");
 			return true;
 		}
 		else
@@ -162,12 +176,12 @@ public class MolecularMath
 			{
 				if(line.startsWith("gram ->"))
 				{
-					System.out.println(" * Command : |gram -> "+line.substring(line.indexOf(" -> ")+4)+"|");
+					packageAndSendCommand(" * Command : |gram -> "+line.substring(line.indexOf(" -> ")+4)+"|");
 					return true;
 				}
 				else if(line.endsWith("-> gram"))
 				{
-					System.out.println(" * Command : |"+line.substring(0,line.indexOf(" -> "))+" -> gram|");
+					packageAndSendCommand(" * Command : |"+line.substring(0,line.indexOf(" -> "))+" -> gram|");
 					return true;
 				}
 			}
@@ -175,14 +189,14 @@ public class MolecularMath
 			{
 				if(line.startsWith("amu") && line.indexOf("amu") < line.indexOf("#"))
 				{
-					System.out.println(" * Command : |amu -> gram");
-					System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
+					packageAndSendCommand(" * Command : |amu -> gram");
+					packageAndSendCommand(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
 					return true;
 				}
 				else if(line.startsWith("mol") && line.indexOf("mol") < line.indexOf("#"))
 				{
-					System.out.println(" * Command : |mol -> gram");
-					System.out.println(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
+					packageAndSendCommand(" * Command : |mol -> gram");
+					packageAndSendCommand(" * Command : |gram -> "+line.substring(line.lastIndexOf(" -> ")+4)+"|");
 					return true;
 				}
 			}

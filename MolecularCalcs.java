@@ -32,6 +32,8 @@ public class MolecularCalcs
 		math.setPath(screen); //sets path and prints it to interface
 		math.doMath(screen);
 
+		System.out.println("\n Final Result : "+math.getFinalResult()+" "+unitsFin);//used for testing, will later be shown on the display panel
+
 		end();
 	}
 
@@ -71,18 +73,15 @@ public class MolecularCalcs
 
 	public void end()
 	{
-		System.out.print("\nHit ENTER to exit : ");
-		termReader.nextLine();
-		System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+		System.out.println("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
 		System.out.println("\n\n");
-		System.exit(1);
 	}
 
 	public void getMoleculeInfo()
 	{
 		System.out.print("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
 		inputMolecule = termReader.nextLine().trim();
-		System.out.print("\n--> Enter Initial Units (units described in guide, gram, gram/mol, particles, mol, amu) : ");
+		System.out.print("\n--> Enter Initial Units (metric units in siPrefixes.txt, gram, gram/mol, particles, mol, amu) : ");
 		unitsInit = termReader.nextLine().trim();
 		
 		System.out.print("\n--> Enter acquired value/measurement : ");
@@ -94,7 +93,7 @@ public class MolecularCalcs
 		else //ex: 15.16
 			givenValue = Double.parseDouble(s);
 
-		System.out.print("\n--> Enter Final Units (units described in guide, gram, gram/mol, particles, mol, amu) : ");
+		System.out.print("\n--> Enter Final Units (metric units in siPrefixes.txt, gram, gram/mol, particles, mol, amu) : ");
 		unitsFin = termReader.nextLine();
 		while(unitsInit.endsWith("gram") && unitsInit.length() > 4 && unitsFin.endsWith("gram") && unitsFin.length() > 4)
 		{
