@@ -6,10 +6,13 @@ public class Path
 	private String start;
 	private String end;
 	private String path;
-	private int metricConv1;
-	private int metricConv2;
+	private int gram_To_Metric;
 	private boolean metricFirst;
 	private boolean metricLast;
+
+	private int gram_To_Metric_EXC1;
+	private int gram_To_Metric_EXC2;
+
 	private Scanner siReader;
 	private File siPrefixes;
 
@@ -21,10 +24,13 @@ public class Path
 		start = a;
 		end = b;
 		path = "";
-		metricConv1 = 0;
-		metricConv2 = 0;
+		gram_To_Metric = 0;
 		metricFirst = false;
 		metricLast = false;
+
+		gram_To_Metric_EXC1 = 0;
+		gram_To_Metric_EXC2 = 0;
+
 		siPrefixes = new File("siPrefixes.txt");
 		setScanner();
 	}
@@ -47,14 +53,19 @@ public class Path
 		return path;
 	}
 
-	public int getMetricConversionFirst()
+	public double getMetricConversion()
 	{
-		return metricConv1;
+		return gram_To_Metric;
 	}
 
-	public int getMetricConversionLast()
+	public int getMetricConversionEXC1()
 	{
-		return metricConv2;
+		return gram_To_Metric_EXC1;
+	}
+
+	public int getMetricConversionEXC2()
+	{
+		return gram_To_Metric_EXC2;
 	}
 
 	public boolean isMetricFirst()
@@ -83,7 +94,9 @@ public class Path
 			if(line2.contains(start))
 			{
 				metricFirst = true;
-				metricConv1 = Integer.parseInt(line.substring(line.indexOf("^")+1));
+				gram_To_Metric_EXC1 = Integer.parseInt(line.substring(line.indexOf("^")+1));
+
+				gram_To_Metric = Integer.parseInt(line.substring(line.indexOf("^")+1));//notice difference between the two adjacent variables
 				if(bool)
 					return !bool;
 				bool = !bool;
@@ -99,7 +112,9 @@ public class Path
 				if(line2.contains(end))
 				{
 					metricLast = true;
-					metricConv2 = Integer.parseInt(line.substring(line.indexOf("^")+1));
+					gram_To_Metric_EXC2 = Integer.parseInt(line.substring(line.indexOf("^")+1));
+
+					gram_To_Metric = Integer.parseInt(line.substring(line.indexOf("^")+1));//notice difference between the two adjacent variables
 					if(type.equals("onlyMetric"))
 						return bool;
 					return !bool;

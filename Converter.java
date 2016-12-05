@@ -1,24 +1,17 @@
 public class Converter
 {
-	private double metricConvFirst;
-	private double metricConvLast;
 	private double finalResult;
 	private boolean metricAlready;
 	private MolecularScreen screen;
 
+	private double METRIC_PER_GRAM;
 	private final double AMU_PER_GRAM = Math.pow(1.66,-24);
 	private double GRAM_PER_MOL;
 	private final double MOL_PER_PARTICLES = Math.pow(6.02,23);
 
-	public Converter(int a, int b, double given, MolecularScreen mscr, double molarMass)
+	public Converter(double a, double given, MolecularScreen mscr, double molarMass)
 	{
-		metricConvFirst = 0.0;
-		metricConvLast = 0.0;
-		if(a != 0)
-			metricConvFirst = (double)(Math.pow(10, a));
-		if(b != 0)
-			metricConvLast = (double)(Math.pow(10, b));
-		
+		METRIC_PER_GRAM = Math.pow(10, a);
 		finalResult = given;
 		screen = mscr;
 		GRAM_PER_MOL = molarMass;
@@ -34,23 +27,40 @@ public class Converter
 	{
 		if(command.contains("amu -> gram") || command.contains("gram -> amu"))
 			amu_Gram(command);
+		else if(command.contains("particles -> gram/mol") || command.contains("gram/mol -> particles"))
+			particles_GramMol(command);
 		else if(command.contains("gram -> mol") || command.contains("mol -> gram"))
 			gram_Mol(command);
 		else if(command.contains("mol -> particles") || command.contains("particles -> mol"))
 			mol_Particles(command);
-		else if(command.contains("particles -> gram/mol") || command.contains("gram/mol -> particles"))
-			particles_GramMol(command);
 		else
 			gram_Metrics(command);
+	}
+
+	public void takeCommand(String command, int conversionFactor)
+	{//overloaded to handle double metric-metric commands
+		metric_Metric_Double(command, conversionFactor);
+	}
+
+	private String metric_Metric_Double(String command, int conversionFactor)
+	{
+		if(command.startsWith("gram"))
+		{
+			finalResult = finalResult*(1/Math.pow(10,conversionFactor));
+				return "";
+		}
+		finalResult = finalResult*(Math.pow(10,conversionFactor));
+		return "";
 	}
 
 	private String gram_Metrics(String command)
 	{
 		if(command.startsWith("gram"))
 		{
+			finalResult = finalResult*(1/METRIC_PER_GRAM);
 			return "";
 		}
-
+		finalResult = finalResult*(METRIC_PER_GRAM);
 		return "";
 	}
 
@@ -58,10 +68,10 @@ public class Converter
 	{
 		if(command.startsWith("amu"))
 		{
-			finalResult = finalResult*(AMU_PER_GRAM);
+			finalResult = finalResult*(1/AMU_PER_GRAM);
 			return "";
 		}
-		finalResult = finalResult*(1/AMU_PER_GRAM);
+		finalResult = finalResult*(AMU_PER_GRAM);
 		return "";
 	}
 
@@ -69,10 +79,10 @@ public class Converter
 	{
 		if(command.startsWith("gram"))
 		{
-			finalResult = finalResult*(GRAM_PER_MOL);
+			finalResult = finalResult*(1/GRAM_PER_MOL);
 			return "";
 		}
-		finalResult = finalResult*(1/GRAM_PER_MOL);
+		finalResult = finalResult*(GRAM_PER_MOL);
 		return "";
 	}
 

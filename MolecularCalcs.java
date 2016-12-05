@@ -1,8 +1,9 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class MolecularCalcs
 {
-	private String inputMolecule, unitsInit, unitsFin;
+	private String inputMolecule, unitsInit, unitsFin, givenValueSTR;
 	private double givenValue;
 	private Scanner termReader;
 	private Molecule molecule;
@@ -14,6 +15,7 @@ public class MolecularCalcs
 		inputMolecule = "";
 		unitsInit = "";
 		unitsFin = "";
+		givenValueSTR = "";
 		givenValue = 0.0;
 		termReader = new Scanner(System.in);
 	}
@@ -22,19 +24,64 @@ public class MolecularCalcs
 	{
 		introduction();
 		
-		getMoleculeInfo();
+		boolean doubleMetric = getMoleculeInfo();
 		molecule = new Molecule(inputMolecule);
 		molecule.calculateAttr(); //calculate attribute
 
 		screen = new MolecularScreen(molecule); //requires several of molecule's attributes
 
-		math = new MolecularMath(unitsInit,unitsFin,givenValue,molecule);
+		math = new MolecularMath(unitsInit,unitsFin,givenValue,molecule, doubleMetric);
 		math.setPath(screen); //sets path and prints it to interface
 		math.doMath(screen);
 
-		System.out.println("\n Final Result : "+math.getFinalResult()+" "+unitsFin);//used for testing, will later be shown on the display panel
+		System.out.println("\n Given Value contains : "+getSigFigs(givenValueSTR)+" significant digits");
+		//DecimalFormat dformat = new DecimalFormat("########.###");
+		//System.out.println(" Final Result : "+dformat.format(math.getFinalResult())+" "+unitsFin);//used for testing, will later be shown on the display panel
+		System.out.println(" Final Result : "+math.getFinalResult()+" "+unitsFin);//used for testing, will later be shown on the display panel
 
 		end();
+	}
+
+	public int getSigFigs(String value)
+	{
+		if(value.contains("*"))
+		{
+			value = value.substring(0,value.indexOf("*"));
+		}
+		else if(value.contains("^"))
+		{
+			value = value.substring(0,value.indexOf("^"));
+		}
+		
+		if(!value.contains("."))
+		{
+			if(value.contains("0"))
+			{
+				return value.indexOf("0")-1;
+			}
+			return value.length();
+		}
+		else
+		{
+			if(value.contains("0"))
+			{
+				if(!value.startsWith("0"))
+				{
+					return value.length()-1;
+				}
+				else
+				{
+					for(int i = 2; i<value.length(); i++)
+					{
+						if(value.charAt(i) != 48)
+						{
+							return value.length()-i;
+						}
+					}
+				}
+			}
+			return value.length()-1;
+		}
 	}
 
 	public void introduction()
@@ -74,11 +121,12 @@ public class MolecularCalcs
 	public void end()
 	{
 		System.out.println("\n<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+		System.out.println(" * Used atomic mass constants of the periodic table found at : <http://www.science.co.il/PTelements.asp>");
 		System.out.println("\n\n");
 	}
 
-	public void getMoleculeInfo()
-	{
+	public boolean getMoleculeInfo()
+	{//gets all the user input, but also determines whether there is a special metric-metric case
 		System.out.print("--> Enter your molecule/atom (ex: C6H12O6/ex: Na) : ");
 		inputMolecule = termReader.nextLine().trim();
 		System.out.print("\n--> Enter Initial Units (metric units in siPrefixes.txt, gram, gram/mol, particles, mol, amu) : ");
@@ -86,6 +134,7 @@ public class MolecularCalcs
 		
 		System.out.print("\n--> Enter acquired value/measurement : ");
 		String s = termReader.nextLine().trim();
+		givenValueSTR = s;
 		if(s.contains("^") && !s.contains("*")) //ex: 15^16
 			givenValue = Math.pow(Double.parseDouble(s.substring(0,s.indexOf("^"))),Double.parseDouble(s.substring(s.indexOf("^")+1)));
 		else if(s.contains("^") && s.contains("*")) //ex: 2.3*10^17 (scientific notation)
@@ -95,11 +144,10 @@ public class MolecularCalcs
 
 		System.out.print("\n--> Enter Final Units (metric units in siPrefixes.txt, gram, gram/mol, particles, mol, amu) : ");
 		unitsFin = termReader.nextLine();
-		while(unitsInit.endsWith("gram") && unitsInit.length() > 4 && unitsFin.endsWith("gram") && unitsFin.length() > 4)
+		if(unitsInit.endsWith("gram") && unitsInit.length() > 4 && unitsFin.endsWith("gram") && unitsFin.length() > 4)
 		{
-			System.out.println("	<THIS PROGRAM DOES NOT OFFER SUCH METRIC-METRIC CALCULATIONS!>");
-			System.out.print("\n--> Enter Final Units (units described in guide, gram, gram/mol, particles, mol, amu) : ");
-			unitsFin = termReader.nextLine();
+			return true;//there is a metric-metric case
 		}
+		return false;//there is no metric-metric case
 	}
 }

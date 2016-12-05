@@ -10,7 +10,7 @@ public class MolecularScreen
 	{
 		frame = new MolecularFrame();
 		((MolecularFrame)(frame)).setPanel();
-		((MolecularPanel1)(getMP1())).setArrays(molecule.getElementArray(),molecule.getDigitArray());
+		((MolecularPanel1)(getMP1())).setArrays(molecule.getElementArray(),molecule.getEntityCountArray());
 	}
 
 	public void setPathDiagram(String s)

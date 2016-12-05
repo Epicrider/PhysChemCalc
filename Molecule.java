@@ -1,33 +1,32 @@
 public class Molecule
 {
 	private String name;
-	private int atomCount, elementCount;
-	private double totalMass;
-	private int [] digits;
-	private String [] elements;
+	private int elementCount;//element = number of different elements that make up molecule
+	private double totalMass;//total mass of molecule in gram/mol units
+	private int [] entityCount;//holds # of atoms of each specified element (in correspondence with elements[])
+	private String [] elements;//holds the different individual elements that make up molecule
 	private FindElement find;
 
 	public Molecule(String n)
 	{
 		name = n;
 		elementCount = 0;
-		atomCount = 0;
 		totalMass = 0.0;
-		digits = new int[n.length()];
+		entityCount = new int[n.length()];
 		elements = new String[n.length()];
 		find = new FindElement();
 	}
 
 	public void calculateAttr()
 	{
-		setDigitNElementArrays(); //arrays need to be populated before setting total mass
+		setEntityCountNElementArrays();//arrays need to be populated before setting total mass
 		setTotalMass(); 
 	}
 
 	public void setTotalMass()
 	{
 		for(int i = 0; i<= elementCount-1; i++)
-			totalMass+= find.findMass(elements[i],digits[i]); // passes element to find, and the # of that element to calculate
+			totalMass+= find.findMass(elements[i],entityCount[i]); // passes element to find, and the # of that element to calculate
 	}
 
 	public String getName()
@@ -45,12 +44,12 @@ public class Molecule
 		return elements;
 	}
 
-	public int[] getDigitArray()
+	public int[] getEntityCountArray()
 	{
-		return digits;
+		return entityCount;
 	}
 
-	public void setDigitNElementArrays()
+	public void setEntityCountNElementArrays()
 	{
 		int counter = 0;
 		int counter2 = 0;
@@ -62,12 +61,12 @@ public class Molecule
 			{
 				if(i>0 && dig.length() != 0)//
 				{
-					digits[counter] = Integer.parseInt(dig);
+					entityCount[counter] = Integer.parseInt(dig);
 					counter++;
 				}
 				else if(i>0 && dig.length() == 0)
 				{
-					digits[counter] = 1;
+					entityCount[counter] = 1;
 					counter++;
 				}
 				dig = "";
@@ -90,13 +89,13 @@ public class Molecule
 		}
 
 		if(name.endsWith(elements[counter2-1]))
-			digits[counter] = 1;
+			entityCount[counter] = 1;
 		else
 		{
 			String temp = name.substring(name.lastIndexOf(elements[counter2-1]));
 			while(temp.charAt(0) >= 97 && temp.charAt(0) <= 122 || temp.charAt(0)>= 65 && temp.charAt(0)<=90)
 				temp = temp.substring(1);
-			digits[counter] = Integer.parseInt(temp);
+			entityCount[counter] = Integer.parseInt(temp);
 		}
 	}
 }
