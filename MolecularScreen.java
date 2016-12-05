@@ -18,6 +18,11 @@ public class MolecularScreen
 		((MolecularPanel1)(getMP1())).setPathDiagram(s);
 	}
 
+	public void drawConversions(String s)
+	{
+		((MolecularPanel2)(getMP2())).drawConversions(s);
+	}
+
 	public JPanel getMP1()
 	{
 		return ((MolecularFrame)(frame)).getTopPanel();
@@ -37,11 +42,12 @@ class MolecularPanel1 extends JPanel
 	private final int LEFT_JUSTF = 50;
 	private final int TOP_JUSTF = 180;
 	private final int TOP_JUSTF2 = 195;
-	private final BasicStroke thickStroke = new BasicStroke(9.0f);//changes the thickness of lines (utilized by drawLine(~))
+	private final BasicStroke thickStroke = new BasicStroke(6.0f);//changes the thickness of lines (utilized by drawLine(~))
 	private int SIZE_FACTOR; //treat as constant even though not declared as final
 
 	public MolecularPanel1()
 	{
+		setBackground(Color.BLACK);
 		atomicSymbols = new String[1000];
 		atomCount = new int[1000];
 		pathDiagram = "";
@@ -69,6 +75,7 @@ class MolecularPanel1 extends JPanel
 	{
 		super.paintComponent(g);
 		
+		g.setColor(Color.LIGHT_GRAY);
 		int shift = 0;
 		g.setFont(new Font("Sans Serif",Font.BOLD,40));
 		g.drawString("YOUR MOLECULE : ",50,80);
@@ -112,24 +119,69 @@ class MolecularPanel1 extends JPanel
 
 class MolecularPanel2 extends JPanel
 {
-	private final int TOP_JUSTF = 100;
-	private final int TOP_JUSTF2 = 200;
-	private final BasicStroke thickStroke = new BasicStroke(9.0f);
+	private final int BASE_SHIFT_HORZ = 350;
+	private final int BASE_SHIFT_VERT = 75;
+	private final BasicStroke thickStroke = new BasicStroke(6.0f);
+
+	private int shiftFactorHORZ;
+	private int shiftFactorVERT;
+	private int indexCounter;
+	private String [] information;
 
 	public MolecularPanel2()
 	{
+		setBackground(Color.BLACK);
+		shiftFactorHORZ = 0;
+		shiftFactorVERT = 1;
+		indexCounter = 0;
+		information = new String[4];
+	}
 
+	public void drawConversions(String conversion)
+	{
+		if(conversion.endsWith("#"))
+		{
+			information[indexCounter] = conversion;
+			indexCounter++;
+		}
+		else if(conversion.startsWith("#"))
+		{
+			information[indexCounter] = conversion;
+			indexCounter++;
+		}
+		else
+		{
+			information[indexCounter] = conversion;
+			indexCounter++;
+		}
+		repaint();
 	}
 
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		g.setFont(new Font("Sans Serif", Font.BOLD, 40));
+		g.setColor(Color.LIGHT_GRAY);
 		g.drawString("RESULT :",470,50);
 
 		Graphics2D extraGraphics = (Graphics2D)g;
 		extraGraphics.setStroke(thickStroke);
 		extraGraphics.drawLine(470,60,630,60);
+		for(int i = 0; i<information.length && information[i] != null; i++)
+		{
+			if(information[i].startsWith("#"))
+			{
+				shiftFactorVERT++;
+				g.drawString(information[i], BASE_SHIFT_HORZ*i-i, BASE_SHIFT_VERT*shiftFactorVERT);
+			}
+			else if(information[i].endsWith("#"))
+			{
+				g.drawString(information[i], BASE_SHIFT_HORZ*i, BASE_SHIFT_VERT*shiftFactorVERT);
+				shiftFactorVERT++;
+			}
+			else
+				g.drawString(information[i], BASE_SHIFT_HORZ*i, BASE_SHIFT_VERT*shiftFactorVERT);
+		}
 	}
 }
 
@@ -137,7 +189,7 @@ class ContentPanel extends JPanel
 {
 	public ContentPanel()
 	{
-		setBackground(Color.BLACK);
+		setBackground(Color.LIGHT_GRAY);
 	}
 
 	public void paintComponent(Graphics g)
