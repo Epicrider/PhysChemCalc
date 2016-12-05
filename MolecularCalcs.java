@@ -34,7 +34,7 @@ public class MolecularCalcs
 		math.setPath(screen); //sets path and prints it to interface
 		math.doMath(screen);
 
-		System.out.println("\n Given Value contains : "+getSigFigs(givenValueSTR)+" significant digits");
+		System.out.println("\n Given Value contains : "+getSigFigs(givenValueSTR)+" significant digits.");
 		//DecimalFormat dformat = new DecimalFormat("########.###");
 		//System.out.println(" Final Result : "+dformat.format(math.getFinalResult())+" "+unitsFin);//used for testing, will later be shown on the display panel
 		System.out.println(" Final Result : "+math.getFinalResult()+" "+unitsFin);//used for testing, will later be shown on the display panel
