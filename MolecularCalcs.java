@@ -45,29 +45,43 @@ public class MolecularCalcs
 	public int getSigFigs(String value)
 	{
 		if(value.contains("*"))
+		{
 			value = value.substring(0,value.indexOf("*"));
+		}
 		else if(value.contains("^"))
+		{
 			value = value.substring(0,value.indexOf("^"));
-
-		if(!value.contains("."))//this probably will never evaluate to true because doubles have decimal places no matter what
-		//but just in case, will handle exception if there is no decimal dot
+		}
+		
+		if(!value.contains("."))
 		{
 			if(value.contains("0"))
+			{
 				return value.indexOf("0")-1;
+			}
 			return value.length();
 		}
-		if(value.contains("0"))
+		else
 		{
-			if(!value.startsWith("0"))
-				return value.length()-1;
-			
-			for(int i = 2; i<value.length(); i++)
+			if(value.contains("0"))
 			{
-				if(value.charAt(i) != 48)
-					return value.length()-i;
+				if(!value.startsWith("0"))
+				{
+					return value.length()-1;
+				}
+				else
+				{
+					for(int i = 2; i<value.length(); i++)
+					{
+						if(value.charAt(i) != 48)
+						{
+							return value.length()-i;
+						}
+					}
+				}
 			}
+			return value.length()-1;
 		}
-		return value.length()-1;
 	}
 
 	public void introduction()
@@ -94,7 +108,7 @@ public class MolecularCalcs
 			System.out.print("\nHit ENTER when done : ");
 			termReader.nextLine();
 			System.out.println("\n\n When the GUI panel pops up, it will show you the path of calculations that will be taken");
-			System.out.println(" Anywhere that says '#' represents a split in calculations that you see in RESULTS (Currently, however,\n the you will only see conversions in RESULTS until program is finished");
+			System.out.println(" Anywhere that says '#' represents a split in calculations that you will later see in RESULTS when program is completed");
 			System.out.print("\nHit ENTER when done : ");
 			termReader.nextLine();
 			System.out.println("\n HI again");
