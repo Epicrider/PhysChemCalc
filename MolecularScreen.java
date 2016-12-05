@@ -119,8 +119,8 @@ class MolecularPanel1 extends JPanel
 
 class MolecularPanel2 extends JPanel
 {
-	private final int BASE_SHIFT_HORZ = 350;
-	private final int BASE_SHIFT_VERT = 75;
+	private final int BASE_SHIFT_HORZ = 300;
+	private final int BASE_SHIFT_VERT = 100;
 	private final BasicStroke thickStroke = new BasicStroke(6.0f);
 
 	private int shiftFactorHORZ;
@@ -167,20 +167,27 @@ class MolecularPanel2 extends JPanel
 		Graphics2D extraGraphics = (Graphics2D)g;
 		extraGraphics.setStroke(thickStroke);
 		extraGraphics.drawLine(470,60,630,60);
+
+		g.setFont(new Font("Sans Serif", Font.PLAIN, 30));
 		for(int i = 0; i<information.length && information[i] != null; i++)
 		{
 			if(information[i].startsWith("#"))
 			{
 				shiftFactorVERT++;
-				g.drawString(information[i], BASE_SHIFT_HORZ*i-i, BASE_SHIFT_VERT*shiftFactorVERT);
+				shiftFactorHORZ = 0;
+				g.drawString(information[i], BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
 			}
 			else if(information[i].endsWith("#"))
 			{
-				g.drawString(information[i], BASE_SHIFT_HORZ*i, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i], BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
 				shiftFactorVERT++;
+				shiftFactorHORZ = 0;
 			}
 			else
-				g.drawString(information[i], BASE_SHIFT_HORZ*i, BASE_SHIFT_VERT*shiftFactorVERT);
+			{
+				g.drawString(information[i], BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				shiftFactorHORZ++;
+			}
 		}
 	}
 }

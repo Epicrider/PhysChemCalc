@@ -49,10 +49,10 @@ public class Converter
 		if(command.startsWith("gram"))
 		{
 			finalResult = finalResult*(1/Math.pow(10,conversionFactor));
-				return "start w/ gram";
+				return command;
 		}
 		finalResult = finalResult*(Math.pow(10,conversionFactor));
-		return "end w/ gram";
+		return command;
 	}
 
 	private String gram_Metrics(String command)
@@ -60,10 +60,10 @@ public class Converter
 		if(command.startsWith("gram"))
 		{
 			finalResult = finalResult*(1/METRIC_PER_GRAM);
-			return "#start w/ gram";
+			return "#"+command;
 		}
 		finalResult = finalResult*(METRIC_PER_GRAM);
-		return "end w/ gram#";
+		return command+"#";
 	}
 
 	private String amu_Gram(String command)
@@ -71,10 +71,10 @@ public class Converter
 		if(command.startsWith("amu"))
 		{
 			finalResult = finalResult*(1/AMU_PER_GRAM);
-			return "start w/ amu";
+			return command;
 		}
 		finalResult = finalResult*(AMU_PER_GRAM);
-		return "end w/ amu";
+		return command;
 	}
 
 	private String gram_Mol(String command)
@@ -82,10 +82,10 @@ public class Converter
 		if(command.startsWith("gram"))
 		{
 			finalResult = finalResult*(1/GRAM_PER_MOL);
-			return "end w/ mol";
+			return command;
 		}
 		finalResult = finalResult*(GRAM_PER_MOL);
-		return "start w/ mol";
+		return command;
 	}
 
 	private String mol_Particles(String command)
@@ -93,10 +93,10 @@ public class Converter
 		if(command.startsWith("mol"))
 		{
 			finalResult = finalResult*(MOL_PER_PARTICLES);
-			return "end w/ particles";
+			return command;
 		}
 		finalResult = finalResult*(1/MOL_PER_PARTICLES);
-		return "start w/ particles";
+		return command;
 	}
 
 	private String particles_GramMol(String command)
@@ -104,9 +104,9 @@ public class Converter
 		if(command.startsWith("particles"))
 		{
 			finalResult = finalResult*(GRAM_PER_MOL);
-			return "end w/ gram/mol";
+			return command;
 		}
 		finalResult = finalResult*(1/GRAM_PER_MOL);
-		return "start w/ gram/mol";
+		return command;
 	}
 }
