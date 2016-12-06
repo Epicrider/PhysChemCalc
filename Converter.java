@@ -5,9 +5,9 @@ public class Converter
 	private MolecularScreen screen;
 
 	private double METRIC_PER_GRAM;
-	private final double AMU_PER_GRAM = Math.pow(1.66,-24);
+	private final double AMU_PER_GRAM = 1.66 * Math.pow(10,-24);
 	private double GRAM_PER_MOL;
-	private final double MOL_PER_PARTICLES = Math.pow(6.02,23);
+	private final double MOL_PER_PARTICLES = 6.02 * Math.pow(10,23);
 
 	public Converter(double a, double given, MolecularScreen mscr, double molarMass)
 	{
@@ -70,11 +70,11 @@ public class Converter
 	{
 		if(command.startsWith("amu"))
 		{
-			finalResult = finalResult*(1/AMU_PER_GRAM);
-			return "1/"+AMU_PER_GRAM;
+			finalResult = finalResult*(AMU_PER_GRAM);
+			return "1.66*10^-24 gram/1 amu";
 		}
-		finalResult = finalResult*(AMU_PER_GRAM);
-		return AMU_PER_GRAM+"/1";
+		finalResult = finalResult*(1/AMU_PER_GRAM);
+		return "1 amu/1.66*10^-24 gram";
 	}
 
 	private String gram_Mol(String command)
@@ -82,10 +82,10 @@ public class Converter
 		if(command.startsWith("gram"))
 		{
 			finalResult = finalResult*(1/GRAM_PER_MOL);
-			return "1/"+GRAM_PER_MOL;
+			return "1mol/"+(int)GRAM_PER_MOL+"gram";
 		}
 		finalResult = finalResult*(GRAM_PER_MOL);
-		return GRAM_PER_MOL+"/1";
+		return (int)GRAM_PER_MOL+"gram/1mol";
 	}
 
 	private String mol_Particles(String command)
@@ -93,10 +93,10 @@ public class Converter
 		if(command.startsWith("mol"))
 		{
 			finalResult = finalResult*(MOL_PER_PARTICLES);
-			return MOL_PER_PARTICLES+"/1";
+			return "6.02*10^23 particles/1 mol";
 		}
 		finalResult = finalResult*(1/MOL_PER_PARTICLES);
-		return "1/"+MOL_PER_PARTICLES;
+		return "1 mol/6.02*10^23 particles";
 	}
 
 	private String particles_GramMol(String command)
@@ -104,9 +104,9 @@ public class Converter
 		if(command.startsWith("particles"))
 		{
 			finalResult = finalResult*(GRAM_PER_MOL);
-			return GRAM_PER_MOL+"/1";
+			return (int)GRAM_PER_MOL+" gram_mol/1 particle";
 		}
 		finalResult = finalResult*(1/GRAM_PER_MOL);
-		return "1/"+GRAM_PER_MOL;
+		return "1 particle/"+(int)GRAM_PER_MOL+" gram/mol";
 	}
 }

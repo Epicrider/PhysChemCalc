@@ -38,7 +38,7 @@ public class MolecularMath
 	{
 		boolean onlyMetric = path.onlyOneConversionType("onlyMetric");
 		boolean onlyNonMetric = path.onlyOneConversionType("onlyNonMetric");
-		System.out.println("Is only Metric? : "+onlyMetric);
+
 		if(!path.gramException())
 		{
 			if(!path.molException())

@@ -6,7 +6,7 @@ public class MolecularScreen
 {
 	private JFrame frame;
 
-	public MolecularScreen(Molecule molecule, String givenValue, String unitsInit, String unitsFin)
+	public MolecularScreen(Molecule molecule, String givenValue, String unitsInit)
 	{
 		frame = new MolecularFrame();
 		((MolecularFrame)(frame)).setPanel();
@@ -45,7 +45,7 @@ class MolecularPanel1 extends JPanel
 	private String [] atomicSymbols;
 	private int [] atomCount;
 	private String pathDiagram;
-	private final int LEFT_JUSTF = 50;
+	private final int LEFT_JUSTF = 225;
 	private final int TOP_JUSTF = 180;
 	private final int TOP_JUSTF2 = 195;
 	private final BasicStroke thickStroke = new BasicStroke(6.0f);//changes the thickness of lines (utilized by drawLine(~))
@@ -84,24 +84,24 @@ class MolecularPanel1 extends JPanel
 		g.setColor(Color.LIGHT_GRAY);
 		int shift = 0;
 		g.setFont(new Font("Sans Serif",Font.BOLD,40));
-		g.drawString("YOUR MOLECULE : ",50,80);
+		g.drawString("YOUR MOLECULE : ",225,80);
 
 		Graphics2D extraGraphics = (Graphics2D)g;
 		extraGraphics.setStroke(thickStroke);
-		extraGraphics.drawLine(55,85,400,85);
-		extraGraphics.drawLine(475,0,475,900);
-		extraGraphics.drawLine(750,85,860,85);
+		extraGraphics.drawLine(225,90,600,90);
+		extraGraphics.drawLine(900,0,900,900);
+		extraGraphics.drawLine(1300,90,1425,90);
 
-		g.drawString("PATH : ",750,80);
+		g.drawString("PATH : ",1300,80);
 		if(pathDiagram.contains("#"))
 		{
 			String line = pathDiagram.substring(0,pathDiagram.indexOf("#")+1);
-			g.drawString(line,500,200);
+			g.drawString(line,950,200);
 			line = pathDiagram.substring(pathDiagram.indexOf("#")+1);
-			g.drawString(line,500,350);
+			g.drawString(line,950,350);
 		}
 		else
-			g.drawString(pathDiagram,500,200);
+			g.drawString(pathDiagram,950,200);
 		g.setFont(new Font("Sans Serif",Font.BOLD, SIZE_FACTOR));
 		
 		for(int i = 0; i<= atomicSymbols.length-1; i++)
@@ -126,7 +126,7 @@ class MolecularPanel1 extends JPanel
 class MolecularPanel2 extends JPanel
 {
 	private final int BASE_SHIFT_HORZ = 300;
-	private final int BASE_SHIFT_VERT = 100;
+	private final int BASE_SHIFT_VERT = 175;
 	private final BasicStroke thickStroke = new BasicStroke(6.0f);
 
 	private int shiftFactorHORZ;
@@ -150,11 +150,13 @@ class MolecularPanel2 extends JPanel
 	public void setStartingText(String text)
 	{
 		startingText = text;
+		repaint();
 	}
 
 	public void setFinalText(String text)
 	{
 		finalText = text;
+		repaint();
 	}
 
 	public void drawConversions(String conversion)
@@ -182,17 +184,17 @@ class MolecularPanel2 extends JPanel
 		super.paintComponent(g);
 		g.setFont(new Font("Sans Serif", Font.BOLD, 40));
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString("RESULT :",470,50);
+		g.drawString("RESULT :",850,75);
 
 		Graphics2D extraGraphics = (Graphics2D)g;
 		extraGraphics.setStroke(thickStroke);
-		extraGraphics.drawLine(470,60,630,60);
+		extraGraphics.drawLine(850,85,1030,85);
 
 		g.setFont(new Font("Sans Serif", Font.PLAIN, 30));
 
 		g.drawString(startingText, BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
 		shiftFactorHORZ++;
-		g.drawOval(BASE_SHIFT_HORZ*shiftFactorHORZ-5, BASE_SHIFT_VERT*shiftFactorVERT, 5, 5);
+		g.drawOval(BASE_SHIFT_HORZ*shiftFactorHORZ-15, BASE_SHIFT_VERT*shiftFactorVERT, 5, 5);
 
 		for(int i = 0; i<information.length && information[i] != null; i++)
 		{
@@ -200,23 +202,28 @@ class MolecularPanel2 extends JPanel
 			{
 				shiftFactorVERT++;
 				shiftFactorHORZ = 0;
-				g.drawString(information[i].substring(0,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawOval(BASE_SHIFT_HORZ*shiftFactorHORZ-15, BASE_SHIFT_VERT*shiftFactorVERT, 5, 5);
+				g.drawString(information[i].substring(1,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
 				g.drawString(information[i].substring(information[i].indexOf("/")+1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
 			}
 			else if(information[i].endsWith("#"))
 			{
+				g.drawOval(BASE_SHIFT_HORZ*shiftFactorHORZ-15, BASE_SHIFT_VERT*shiftFactorVERT, 5, 5);
 				g.drawString(information[i].substring(0,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
-				g.drawString(information[i].substring(information[i].indexOf("/")+1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
+				g.drawString(information[i].substring(information[i].indexOf("/")+1,information[i].length()-1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
 				shiftFactorVERT++;
 				shiftFactorHORZ = 0;
 			}
 			else
 			{
+				g.drawOval(BASE_SHIFT_HORZ*shiftFactorHORZ-15, BASE_SHIFT_VERT*shiftFactorVERT, 5, 5);
 				g.drawString(information[i].substring(0,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
 				g.drawString(information[i].substring(information[i].indexOf("/")+1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
 				shiftFactorHORZ++;
 			}
 		}
+
+		g.drawString("= "+finalText, BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT+25);
 
 		shiftFactorHORZ = 0;//why these 2 things are here is to reset the shifting so that if you minimize the screen, thus causing repaint to be called,
 		//the shift factor needs to be reset so that it doesnt carry over
@@ -248,8 +255,8 @@ class MolecularFrame extends JFrame
 	{
 		super("MolecularCalcs");
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
- 		setSize(screenSize.width*6/7, screenSize.height*6/7);
- 		setLocation(( screenSize.width - screenSize.width * 6 / 7 ) / 2, 0);
+ 		setSize(screenSize.width, screenSize.height*6/7);
+ 		setLocation(0, 0);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);	

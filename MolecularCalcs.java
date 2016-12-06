@@ -28,11 +28,13 @@ public class MolecularCalcs
 		molecule = new Molecule(inputMolecule);
 		molecule.calculateAttr(); //calculate attribute
 
-		screen = new MolecularScreen(molecule, givenValueSTR, unitsInit, unitsFin); //requires several of molecule's attributes
+		screen = new MolecularScreen(molecule, givenValueSTR, unitsInit); //requires several of molecule's attributes
 
 		math = new MolecularMath(unitsInit,unitsFin,givenValue,molecule, doubleMetric);
 		math.setPath(screen); //sets path and prints it to interface
 		math.doMath(screen);
+
+		screen.setFinalText(math.getFinalResult()+" "+unitsFin);
 
 		System.out.println("\n Given Value contains : "+getSigFigs(givenValueSTR)+" significant digits.");
 		//DecimalFormat dformat = new DecimalFormat("########.###");
