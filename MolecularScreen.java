@@ -217,6 +217,9 @@ class MolecularPanel2 extends JPanel
 				shiftFactorHORZ++;
 			}
 		}
+		
+		shiftFactorHORZ = 0;
+		shiftFactorVERT = 1;
 	}
 }
 
