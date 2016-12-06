@@ -217,8 +217,9 @@ class MolecularPanel2 extends JPanel
 				shiftFactorHORZ++;
 			}
 		}
-		
-		shiftFactorHORZ = 0;
+
+		shiftFactorHORZ = 0;//why these 2 things are here is to reset the shifting so that if you minimize the screen, thus causing repaint to be called,
+		//the shift factor needs to be reset so that it doesnt carry over
 		shiftFactorVERT = 1;
 	}
 }

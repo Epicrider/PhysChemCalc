@@ -40,6 +40,8 @@ public class CalcRunner
 			//You can set the coefficients, and the inventory should change consequently
 			//There probably won't be a need for a GUI.
 			System.out.println("\nLoading Chemical Equation Balancer...\n");
+			MolecularBalance mb = new MolecularBalance();
+			mb.initiateSequence();
 		}
 	}
 }
