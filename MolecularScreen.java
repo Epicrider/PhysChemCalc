@@ -6,11 +6,12 @@ public class MolecularScreen
 {
 	private JFrame frame;
 
-	public MolecularScreen(Molecule molecule)
+	public MolecularScreen(Molecule molecule, String givenValue, String unitsInit, String unitsFin)
 	{
 		frame = new MolecularFrame();
 		((MolecularFrame)(frame)).setPanel();
 		((MolecularPanel1)(getMP1())).setArrays(molecule.getElementArray(),molecule.getEntityCountArray());
+		((MolecularPanel2)(getMP2())).setStartingText(givenValue+" "+unitsInit);
 	}
 
 	public void setPathDiagram(String s)
@@ -21,6 +22,11 @@ public class MolecularScreen
 	public void drawConversions(String s)
 	{
 		((MolecularPanel2)(getMP2())).drawConversions(s);
+	}
+
+	public void setFinalText(String s)
+	{
+		((MolecularPanel2)(getMP2())).setFinalText(s);
 	}
 
 	public JPanel getMP1()
@@ -127,6 +133,8 @@ class MolecularPanel2 extends JPanel
 	private int shiftFactorVERT;
 	private int indexCounter;
 	private String [] information;
+	private String startingText;
+	private String finalText;
 
 	public MolecularPanel2()
 	{
@@ -135,6 +143,18 @@ class MolecularPanel2 extends JPanel
 		shiftFactorVERT = 1;
 		indexCounter = 0;
 		information = new String[4];
+		startingText = "";
+		finalText = "";
+	}
+
+	public void setStartingText(String text)
+	{
+		startingText = text;
+	}
+
+	public void setFinalText(String text)
+	{
+		finalText = text;
 	}
 
 	public void drawConversions(String conversion)
@@ -169,23 +189,31 @@ class MolecularPanel2 extends JPanel
 		extraGraphics.drawLine(470,60,630,60);
 
 		g.setFont(new Font("Sans Serif", Font.PLAIN, 30));
+
+		g.drawString(startingText, BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+		shiftFactorHORZ++;
+		g.drawOval(BASE_SHIFT_HORZ*shiftFactorHORZ-5, BASE_SHIFT_VERT*shiftFactorVERT, 5, 5);
+
 		for(int i = 0; i<information.length && information[i] != null; i++)
 		{
 			if(information[i].startsWith("#"))
 			{
 				shiftFactorVERT++;
 				shiftFactorHORZ = 0;
-				g.drawString(information[i], BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i].substring(0,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i].substring(information[i].indexOf("/")+1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
 			}
 			else if(information[i].endsWith("#"))
 			{
-				g.drawString(information[i], BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i].substring(0,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i].substring(information[i].indexOf("/")+1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
 				shiftFactorVERT++;
 				shiftFactorHORZ = 0;
 			}
 			else
 			{
-				g.drawString(information[i], BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i].substring(0,information[i].indexOf("/")), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*shiftFactorVERT);
+				g.drawString(information[i].substring(information[i].indexOf("/")+1), BASE_SHIFT_HORZ*shiftFactorHORZ, BASE_SHIFT_VERT*(shiftFactorVERT)+40);
 				shiftFactorHORZ++;
 			}
 		}
@@ -210,14 +238,18 @@ class MolecularFrame extends JFrame
 	private JPanel background;
 	private JPanel topPanel;
 	private JPanel botPanel;
+	private Dimension screenSize;
 
 	public MolecularFrame()
 	{
 		super("MolecularCalcs");
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+ 		setSize(screenSize.width*6/7, screenSize.height*6/7);
+ 		setLocation(( screenSize.width - screenSize.width * 6 / 7 ) / 2, 0);
+		setResizable(false);
 		setVisible(true);
-		setResizable(true);
-		setSize(1400,900);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);	
+
 		background = new ContentPanel();
 		setContentPane(background);
 		topPanel = new MolecularPanel1();
