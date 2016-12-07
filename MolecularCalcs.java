@@ -99,7 +99,7 @@ public class MolecularCalcs
 			System.out.println(" Anywhere that says '#' represents a split in calculations that you see in RESULTS (Currently, however,\n the you will only see conversions in RESULTS until program is finished");
 			System.out.print("\nHit ENTER when done : ");
 			termReader.nextLine();
-			System.out.println("\n HI again");
+			System.out.println("\n Now shrink your terminal window back to default size if you wish");
 			System.out.print("\nHit ENTER when done : ");
 			termReader.nextLine();
 		}
