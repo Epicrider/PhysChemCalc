@@ -14,6 +14,12 @@ public class MolecularScreen
 		((MolecularPanel2)(getMP2())).setStartingText(givenValue+" "+unitsInit);
 	}
 
+	public void repaintAll()
+	{
+		((MolecularPanel1)(getMP1())).repaintThisPanel();
+		((MolecularPanel2)(getMP2())).repaintThisPanel();
+	}
+
 	public void setPathDiagram(String s)
 	{
 		((MolecularPanel1)(getMP1())).setPathDiagram(s);
@@ -74,6 +80,11 @@ class MolecularPanel1 extends JPanel
 	public void setPathDiagram(String s)
 	{//will be called (not directly) by MolecularMath when path selection is complete
 		pathDiagram = s;
+		repaint();
+	}
+
+	public void repaintThisPanel()
+	{
 		repaint();
 	}
 
@@ -176,6 +187,11 @@ class MolecularPanel2 extends JPanel
 			information[indexCounter] = conversion;
 			indexCounter++;
 		}
+		repaint();
+	}
+
+	public void repaintThisPanel()
+	{
 		repaint();
 	}
 

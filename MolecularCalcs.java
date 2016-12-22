@@ -35,6 +35,7 @@ public class MolecularCalcs
 		math.doMath(screen);
 
 		screen.setFinalText(math.getFinalResult()+" "+unitsFin);
+		screen.repaintAll();
 
 		System.out.println("\n Given Value contains : "+getSigFigs(givenValueSTR)+" significant digits.");
 		//DecimalFormat dformat = new DecimalFormat("########.###");
