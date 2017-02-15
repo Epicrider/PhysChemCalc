@@ -85,7 +85,7 @@ class MolecularPanel1 extends JPanel
 
 	public void repaintThisPanel()
 	{
-		repaint();
+		this.repaint();
 	}
 
 	public void paintComponent(Graphics g)
@@ -192,7 +192,7 @@ class MolecularPanel2 extends JPanel
 
 	public void repaintThisPanel()
 	{
-		repaint();
+		this.repaint();
 	}
 
 	public void paintComponent(Graphics g)

@@ -28,7 +28,7 @@ public class MoleculeGroup
 
 		if(!reactantsSide.contains("+") && !productsSide.contains("+"))
 		{
-			System.out.println("1-1 ratio, already balanced!");
+			System.out.println("This is a theoretically impossible reaction!");
 			System.exit(1);
 		}
 
